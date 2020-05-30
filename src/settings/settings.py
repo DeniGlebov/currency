@@ -1,5 +1,7 @@
 import os
 
+from celery.schedules import crontab
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '3836aiyo_e*m!c#1g@w=oa%@ev4&4a4e6^z7#6+sud%5ef#lc8'
@@ -19,6 +21,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'account',
+    'rate',
 ]
 
 MIDDLEWARE = [
@@ -31,7 +34,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'currency.urls'
+ROOT_URLCONF = 'settings.urls'
 
 TEMPLATES = [
     {
@@ -49,7 +52,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'currency.wsgi.application'
+WSGI_APPLICATION = 'settings.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -86,3 +89,12 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+CELERY_BEAT_SCHEDULE = {
+    'beat': {
+        'task': 'rate.tasks.parse',
+        'schedule': crontab(minute='*/15')
+    },
+}
