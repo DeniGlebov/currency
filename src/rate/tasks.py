@@ -314,9 +314,61 @@ def parse_oschadbank():
 
 
 @shared_task
+def parse_aval():
+    page = requests.get('https://ex.aval.ua/ru/personal/everyday/exchange/exchange/', verify=False, timeout=3)
+    currency_type_mapper = {'Доллары США': mch.CURRENCY_TYPE_USD, 'Евро': mch.CURRENCY_TYPE_EUR, }
+    soup = BeautifulSoup(page.text, "html.parser")
+    body_currency = soup.findAll('div', class_='body-currency')
+
+    temp = body_currency[0].findAll('td')
+    rate = []
+    for i in temp:
+        rate.append(i.text)
+
+    for item in rate:
+        if item not in currency_type_mapper:
+            continue
+        currency_type = currency_type_mapper[item]
+        item = rate.index(item)
+
+        # buy
+        amount = to_decimal(rate[item + 1].replace(',', '.'))
+
+        last = Rate.objects.filter(
+            source=mch.SOURCE_AVAL,
+            currency_type=currency_type,
+            type_rate=mch.RATE_TYPE_BUY,
+        ).last()
+
+        if last is None or last.amount != amount:
+            Rate.objects.create(
+                amount=amount,
+                source=mch.SOURCE_AVAL,
+                currency_type=currency_type,
+                type_rate=mch.RATE_TYPE_BUY, )
+
+        # sale
+        amount = to_decimal(rate[item + 2].replace(',', '.'))
+
+        last = Rate.objects.filter(
+            source=mch.SOURCE_AVAL,
+            currency_type=currency_type,
+            type_rate=mch.RATE_TYPE_SALE,
+        ).last()
+
+        if last is None or last.amount != amount:
+            Rate.objects.create(
+                amount=amount,
+                source=mch.SOURCE_AVAL,
+                currency_type=currency_type,
+                type_rate=mch.RATE_TYPE_SALE, )
+
+
+@shared_task
 def parse():
     parse_monobank.delay()
     parse_privatbank.delay()
     parse_nbu.delay()
     parse_vkurse.delay()
     parse_oschadbank.delay()
+    parse_aval.delay()
