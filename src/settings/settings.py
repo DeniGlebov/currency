@@ -93,8 +93,8 @@ STATIC_URL = '/static/'
 CELERY_BROKER_URL = 'amqp://localhost'
 
 CELERY_BEAT_SCHEDULE = {
-    'beat': {
+    'parse': {
         'task': 'rate.tasks.parse',
-        'schedule': crontab(minute='*/15')
+        'schedule': crontab(minute='*/2'),
     },
 }
