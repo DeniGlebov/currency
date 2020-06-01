@@ -2,4 +2,4 @@ from decimal import Decimal
 
 
 def to_decimal(num) -> Decimal:
-    return round(Decimal(num), 2)
+    return round(Decimal(num), 3)

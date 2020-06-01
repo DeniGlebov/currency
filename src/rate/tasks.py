@@ -16,6 +16,7 @@ def parse_privatbank():
     currency_type_mapper = {
         'USD': mch.CURRENCY_TYPE_USD,
         'EUR': mch.CURRENCY_TYPE_EUR,
+        'RUR': mch.CURRENCY_TYPE_RUR,
     }
 
     for item in response.json():
@@ -65,6 +66,7 @@ def parse_monobank():
     currency_type_mapper = {
         840: mch.CURRENCY_TYPE_USD,
         978: mch.CURRENCY_TYPE_EUR,
+        643: mch.CURRENCY_TYPE_RUR,
     }
 
     for item in response.json():
@@ -109,219 +111,180 @@ def parse_monobank():
 
 @shared_task
 def parse_nbu():
-    url = 'https://bank.gov.ua/NBU_Exchange/exchange?json'
-    response = requests.get(url, timeout=5)
-    currency_type_mapper = {
-        '840': mch.CURRENCY_TYPE_USD,
-        '978': mch.CURRENCY_TYPE_EUR,
-    }
+    response = requests.get('https://bank.gov.ua/NBU_Exchange/exchange?json', timeout=5)
+
+    currency_type_mapper = {'840': mch.CURRENCY_TYPE_USD,
+                            '978': mch.CURRENCY_TYPE_EUR,
+                            '643': mch.CURRENCY_TYPE_RUR, }
 
     for item in response.json():
-
         if item['CurrencyCode'] not in currency_type_mapper:
             continue
-
         currency_type = currency_type_mapper[item['CurrencyCode']]
 
-        # Amount NBU
-        amount = to_decimal(item['Amount'])
+        if currency_type == mch.CURRENCY_TYPE_RUR:
+            amount = to_decimal(item['Amount'] / 10)
+        else:
+            amount = to_decimal(item['Amount'])
+
+        # buy
+        last = Rate.objects.filter(source=mch.SOURCE_NBU,
+                                   currency_type=currency_type,
+                                   type_rate=mch.RATE_TYPE_BUY,
+                                   ).last()
+
+        if last is None or last.amount != amount:
+            Rate.objects.create(amount=amount,
+                                source=mch.SOURCE_NBU,
+                                currency_type=currency_type,
+                                type_rate=mch.RATE_TYPE_BUY, )
+
+        if currency_type == mch.CURRENCY_TYPE_RUR:
+            amount = to_decimal(item['Amount'] / 10)
+        else:
+            amount = to_decimal(item['Amount'])
+
+        # sale
+        last = Rate.objects.filter(source=mch.SOURCE_NBU,
+                                   currency_type=currency_type,
+                                   type_rate=mch.RATE_TYPE_SALE,
+                                   ).last()
+
+        if last is None or last.amount != amount:
+            Rate.objects.create(amount=amount,
+                                source=mch.SOURCE_NBU,
+                                currency_type=currency_type,
+                                type_rate=mch.RATE_TYPE_SALE, )
+
+
+@shared_task
+def parse_vkurse():
+    response = requests.get('http://vkurse.dp.ua/course.json', timeout=5)
+    currency_type_mapper = {
+        'Dollar': mch.CURRENCY_TYPE_USD,
+        'Euro': mch.CURRENCY_TYPE_EUR,
+        'Rub': mch.CURRENCY_TYPE_RUR,
+    }
+
+    for key, value in response.json().items():
+        if key not in currency_type_mapper:
+            continue
+
+        currency_type = currency_type_mapper[key]
+
+        # buy
+        amount = to_decimal(value['buy'])
 
         last = Rate.objects.filter(
-            source=mch.SOURCE_NBU,
+            source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
             currency_type=currency_type,
-            type_rate=mch.RATE_TYPE_AMOUNT,
+            type_rate=mch.RATE_TYPE_BUY,
         ).last()
 
         if last is None or last.amount != amount:
             Rate.objects.create(
                 amount=amount,
-                source=mch.SOURCE_NBU,
+                source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
                 currency_type=currency_type,
-                type_rate=mch.RATE_TYPE_AMOUNT, )
+                type_rate=mch.RATE_TYPE_BUY, )
 
+        # sale
+        amount = to_decimal(value['sale'])
+        # amount = to_decimal(value['sale'][0:-1])
 
-@shared_task
-def parse_vkurse():
-    response = requests.get('http://vkurse.dp.ua/course.json', timeout=5).json()
+        last = Rate.objects.filter(
+            source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
+            currency_type=currency_type,
+            type_rate=mch.RATE_TYPE_SALE,
+        ).last()
 
-    currency_type_mapper = {
-        'Dollar': mch.CURRENCY_TYPE_USD,
-        'Euro': mch.CURRENCY_TYPE_EUR,
-    }
-
-    for key, value in response.items():
-
-        if key == 'Dollar':
-            currency_type = currency_type_mapper[key]
-
-            # buy
-            if response[key]['buy']:
-                amount = to_decimal(value['buy'])
-
-                last = Rate.objects.filter(
-                    source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_BUY,
-                ).last()
-
-                if last is None or last.amount != amount:
-                    Rate.objects.create(
-                        amount=amount,
-                        source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                        currency_type=currency_type,
-                        type_rate=mch.RATE_TYPE_BUY, )
-
-            # sale
-            if response[key]['sale']:
-                amount = to_decimal(value['sale'])
-
-                last = Rate.objects.filter(
-                    source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_SALE,
-                ).last()
-
-                if last is None or last.amount != amount:
-                    Rate.objects.create(
-                        amount=amount,
-                        source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                        currency_type=currency_type,
-                        type_rate=mch.RATE_TYPE_SALE, )
-
-        if key == 'Euro':
-            currency_type = currency_type_mapper[key]
-
-            # buy
-            if response[key]['buy']:
-                amount = to_decimal(value['buy'])
-
-                last = Rate.objects.filter(
-                    source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_BUY,
-                ).last()
-
-                if last is None or last.amount != amount:
-                    Rate.objects.create(
-                        amount=amount,
-                        source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                        currency_type=currency_type,
-                        type_rate=mch.RATE_TYPE_BUY, )
-
-            # sale
-            if response[key]['sale']:
-                amount = to_decimal(value['sale'][0:-1])
-
-                last = Rate.objects.filter(
-                    source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_SALE,
-                ).last()
-
-                if last is None or last.amount != amount:
-                    Rate.objects.create(
-                        amount=amount,
-                        source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
-                        currency_type=currency_type,
-                        type_rate=mch.RATE_TYPE_SALE, )
+        if last is None or last.amount != amount:
+            Rate.objects.create(
+                amount=amount,
+                source=mch.SOURCE_BUD_VSEGDA_V_KURSE,
+                currency_type=currency_type,
+                type_rate=mch.RATE_TYPE_SALE, )
 
 
 @shared_task
 def parse_oschadbank():
+    rate = []
     page = requests.get('https://www.oschadbank.ua/ua/private/currency', verify=False, timeout=5)
 
     currency_type_mapper = {
-        '840': mch.CURRENCY_TYPE_USD,
-        '978': mch.CURRENCY_TYPE_EUR,
+        'USD': mch.CURRENCY_TYPE_USD,
+        'EUR': mch.CURRENCY_TYPE_EUR,
+        'RUB': mch.CURRENCY_TYPE_RUR,
     }
 
     soup = BeautifulSoup(page.text, "html.parser")
-    rate = soup.findAll('td', class_='text-right')
+
+    body_currency = soup.findAll('table', class_='table table-striped table-hover table-primary')
+    temp = body_currency[0].findAll('td')
+
+    for i in temp:
+        rate.append(i.text)
 
     for item in rate:
-        if item.text not in currency_type_mapper:
+        if item not in currency_type_mapper:
             continue
+        currency_type = currency_type_mapper[item]
+        item = rate.index(item)
 
-        if item.text == '840':
-            currency_type = currency_type_mapper[item.text]
+        if currency_type == mch.CURRENCY_TYPE_RUR:
+            amount = to_decimal(rate[item + 5]) / 10
+        else:
+            amount = to_decimal(rate[item + 5])
 
-            # buy
-            amount = to_decimal(rate[4].text)
+        # buy
+        last = Rate.objects.filter(
+            source=mch.SOURCE_OSCHADBANK,
+            currency_type=currency_type,
+            type_rate=mch.RATE_TYPE_BUY,
+        ).last()
 
-            last = Rate.objects.filter(
+        if last is None or last.amount != amount:
+            Rate.objects.create(
+                amount=amount,
                 source=mch.SOURCE_OSCHADBANK,
                 currency_type=currency_type,
-                type_rate=mch.RATE_TYPE_BUY,
-            ).last()
+                type_rate=mch.RATE_TYPE_BUY, )
 
-            if last is None or last.amount != amount:
-                Rate.objects.create(
-                    amount=amount,
-                    source=mch.SOURCE_OSCHADBANK,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_BUY, )
+        if currency_type == mch.CURRENCY_TYPE_RUR:
+            amount = to_decimal(rate[item + 6]) / 10
+        else:
+            amount = to_decimal(rate[item + 6])
 
-            # sale
-            amount = to_decimal(rate[5].text)
+        # sale
+        last = Rate.objects.filter(
+            source=mch.SOURCE_OSCHADBANK,
+            currency_type=currency_type,
+            type_rate=mch.RATE_TYPE_SALE,
+        ).last()
 
-            last = Rate.objects.filter(
+        if last is None or last.amount != amount:
+            Rate.objects.create(
+                amount=amount,
                 source=mch.SOURCE_OSCHADBANK,
                 currency_type=currency_type,
-                type_rate=mch.RATE_TYPE_SALE,
-            ).last()
-
-            if last is None or last.amount != amount:
-                Rate.objects.create(
-                    amount=amount,
-                    source=mch.SOURCE_OSCHADBANK,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_SALE, )
-
-        if item.text == '978':
-            currency_type = currency_type_mapper[item.text]
-
-            # buy
-            amount = to_decimal(rate[10].text)
-
-            last = Rate.objects.filter(
-                source=mch.SOURCE_OSCHADBANK,
-                currency_type=currency_type,
-                type_rate=mch.RATE_TYPE_BUY,
-            ).last()
-
-            if last is None or last.amount != amount:
-                Rate.objects.create(
-                    amount=amount,
-                    source=mch.SOURCE_OSCHADBANK,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_BUY, )
-
-            # sale
-            amount = to_decimal(rate[11].text)
-
-            last = Rate.objects.filter(
-                source=mch.SOURCE_OSCHADBANK,
-                currency_type=currency_type,
-                type_rate=mch.RATE_TYPE_SALE,
-            ).last()
-
-            if last is None or last.amount != amount:
-                Rate.objects.create(
-                    amount=amount,
-                    source=mch.SOURCE_OSCHADBANK,
-                    currency_type=currency_type,
-                    type_rate=mch.RATE_TYPE_SALE, )
+                type_rate=mch.RATE_TYPE_SALE, )
 
 
 @shared_task
 def parse_aval():
+    rate = []
     page = requests.get('https://ex.aval.ua/ru/personal/everyday/exchange/exchange/', timeout=5)
-    currency_type_mapper = {'Доллары США': mch.CURRENCY_TYPE_USD, 'Евро': mch.CURRENCY_TYPE_EUR, }
+    currency_type_mapper = {
+        'Доллары США': mch.CURRENCY_TYPE_USD,
+        'Евро': mch.CURRENCY_TYPE_EUR,
+        'Рубли': mch.CURRENCY_TYPE_RUR,
+    }
+
     soup = BeautifulSoup(page.text, "html.parser")
     body_currency = soup.findAll('div', class_='body-currency')
 
     temp = body_currency[0].findAll('td')
-    rate = []
+
     for i in temp:
         rate.append(i.text)
 

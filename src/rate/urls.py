@@ -5,5 +5,5 @@ from rate import views
 app_name = 'rate'
 
 urlpatterns = [
-    path('', views.rate_all, name='rate'),
+    path('', views.RateList.as_view(), name='rate'),
 ]
