@@ -12,7 +12,7 @@ import requests
 @shared_task
 def parse_privatbank():
     url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
-    response = requests.get(url, timeout=3)
+    response = requests.get(url, timeout=5)
     currency_type_mapper = {
         'USD': mch.CURRENCY_TYPE_USD,
         'EUR': mch.CURRENCY_TYPE_EUR,
@@ -61,7 +61,7 @@ def parse_privatbank():
 @shared_task
 def parse_monobank():
     url = 'https://api.monobank.ua/bank/currency'
-    response = requests.get(url, timeout=3)
+    response = requests.get(url, timeout=5)
     currency_type_mapper = {
         840: mch.CURRENCY_TYPE_USD,
         978: mch.CURRENCY_TYPE_EUR,
@@ -110,7 +110,7 @@ def parse_monobank():
 @shared_task
 def parse_nbu():
     url = 'https://bank.gov.ua/NBU_Exchange/exchange?json'
-    response = requests.get(url, timeout=3)
+    response = requests.get(url, timeout=5)
     currency_type_mapper = {
         '840': mch.CURRENCY_TYPE_USD,
         '978': mch.CURRENCY_TYPE_EUR,
@@ -142,7 +142,7 @@ def parse_nbu():
 
 @shared_task
 def parse_vkurse():
-    response = requests.get('http://vkurse.dp.ua/course.json', timeout=3).json()
+    response = requests.get('http://vkurse.dp.ua/course.json', timeout=5).json()
 
     currency_type_mapper = {
         'Dollar': mch.CURRENCY_TYPE_USD,
@@ -228,7 +228,7 @@ def parse_vkurse():
 
 @shared_task
 def parse_oschadbank():
-    page = requests.get('https://www.oschadbank.ua/ua/private/currency', verify=False, timeout=3)
+    page = requests.get('https://www.oschadbank.ua/ua/private/currency', verify=False, timeout=5)
 
     currency_type_mapper = {
         '840': mch.CURRENCY_TYPE_USD,
@@ -315,7 +315,7 @@ def parse_oschadbank():
 
 @shared_task
 def parse_aval():
-    page = requests.get('https://ex.aval.ua/ru/personal/everyday/exchange/exchange/', verify=False, timeout=3)
+    page = requests.get('https://ex.aval.ua/ru/personal/everyday/exchange/exchange/', timeout=5)
     currency_type_mapper = {'Доллары США': mch.CURRENCY_TYPE_USD, 'Евро': mch.CURRENCY_TYPE_EUR, }
     soup = BeautifulSoup(page.text, "html.parser")
     body_currency = soup.findAll('div', class_='body-currency')
