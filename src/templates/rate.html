@@ -33,11 +33,10 @@
 </head>
 <body>
 
-{{ response }}
 
 <table class="table">
     <tbody>
-    {% for r in rate %}
+    {% for r in object_list %}
     <tr>
         <td>{{ r.id }}</td>
         <td>{{ r.created }}</td>
