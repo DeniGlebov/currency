@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Rate List{% endblock title %}
+
+{% block content %}
+    {% for rate in object_list %}
+         <div>{{ rate.id }} {{ rate.created }} {{ rate.source }}</div>
+     {% endfor %}
+{% endblock content %}

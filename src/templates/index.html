@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block title %}Index{% endblock title %}
 
-HELLO
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {{ request.user.is_authenticated }}
 
-
-</body>
-</html>
+        </div>
+    </div>
+{% endblock content %}

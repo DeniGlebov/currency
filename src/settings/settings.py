@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'debug_toolbar',
 
     'account',
     'rate',
@@ -32,6 +33,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'settings.urls'
@@ -93,8 +96,12 @@ STATIC_URL = '/static/'
 CELERY_BROKER_URL = 'amqp://localhost'
 
 CELERY_BEAT_SCHEDULE = {
-    'beat': {
+    'parse': {
         'task': 'rate.tasks.parse',
-        'schedule': crontab(minute='*/15')
+        'schedule': crontab(minute='*/15'),
     },
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

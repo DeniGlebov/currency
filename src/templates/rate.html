@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups table</title>
+    <style type="text/css">
+   TABLE {
+    width: 600px;
+    border: 2px solid black;
+    background: #134F5C;
+    color: white;
+   }
+   TD, TH {
+    text-align: center;
+    padding: 4px;
+   }
+   TH {
+    color: white;
+    border-bottom: 4px double black;
+   }
+   .even {
+    background: #ffe4b5;
+    color: black;
+   }
+   .lc {
+    text-align: left;
+    color: #fffacd;
+   }
+
+
+
+    </style>
+</head>
+<body>
+
+
+<table class="table">
+    <tbody>
+    {% for r in object_list %}
+    <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.created }}</td>
+        <td>{{ r.get_source_display }}</td>
+        <td>{{ r.get_currency_type_display }}</td>
+        <td>{{ r.amount }}</td>
+        <td>{{ r.get_type_rate_display }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+</body>
+</html>
