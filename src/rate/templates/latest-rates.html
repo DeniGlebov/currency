@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Rate List{% endblock title %}
+{% block title %}Latest Rates{% endblock title %}
 
 
 {% block content %}
@@ -8,7 +8,6 @@
 
 
 <div>
-    <a href="{% url 'rate:download-csv' %}">Download rates</a>
     <table class="table">
         <thead class="table table-bordered table-dark">
         <tr>
