@@ -2,6 +2,7 @@ import csv
 import io
 
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.views.generic import ListView, TemplateView, View
 
 from rate.models import Rate
@@ -115,6 +116,22 @@ class RateDownloadXLSX(View):
         filename = 'rates.xlsx'
         response = HttpResponse(output,
                                 content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+        response['Content-Disposition'] = f'attachment; filename={filename}'
 
         return response
+
+
+def page_not_found_404(request, exception):
+    return render(request, '404.html', status=404)
+
+
+def error_500(request):
+    return render(request, '500.html', status=500)
+
+
+def permission_denied_403(request, exception):
+    return render(request, '403.html', status=403)
+
+
+def bad_request_400(request, exception):
+    return render(request, '400.html', status=400)
