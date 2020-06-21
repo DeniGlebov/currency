@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Delete rate
+{% endblock title %}
+
+{% block content %}
+    Delete rate
+    <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete ?</p>
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock content %}

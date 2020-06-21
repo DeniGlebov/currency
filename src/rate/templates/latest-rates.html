@@ -1,39 +1,35 @@
 {% extends 'base.html' %}
 
+
 {% block title %}Latest Rates{% endblock title %}
 
 
 {% block content %}
+    <div>
+        <table class="table">
+            <thead class="table table-bordered table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Created</th>
+                <th scope="col">Source</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Type</th>
+            </tr>
+            </thead>
 
-
-
-<div>
-    <table class="table">
-        <thead class="table table-bordered table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">ID</th>
-            <th scope="col">Created</th>
-            <th scope="col">Source</th>
-            <th scope="col">Currency</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Type</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {% for r in object_list %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ r.id }}</td>
-            <td>{{ r.created }}</td>
-            <td>{{ r.get_source_display|title }}</td>
-            <td>{{ r.get_currency_type_display }}</td>
-            <td>{{ r.amount }}</td>
-            <td>{{ r.get_type_rate_display|upper }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            <tbody>
+            {% for r in object_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ r.created }}</td>
+                    <td>{{ r.get_source_display|title }}</td>
+                    <td>{{ r.get_currency_type_display }}</td>
+                    <td>{{ r.amount }}</td>
+                    <td>{{ r.get_type_rate_display|upper }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}

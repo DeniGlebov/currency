@@ -4,38 +4,42 @@
 
 
 {% block content %}
+    <div>
+        <a href="{% url 'rate:download-csv' %}">Download rates csv</a>
+        <a href="{% url 'rate:download-xlsx' %}">Download rates xlsx</a>
+        <table class="table">
+            <thead class="table table-bordered table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Created</th>
+                <th scope="col">Source</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Type</th>
 
+                {% if request.user.is_authenticated %}
+                <th scope="col">Edit/Delete</th>
+                {% endif %}
 
+            </tr>
+            </thead>
 
-<div>
-    <a href="{% url 'rate:download-csv' %}">Download rates csv</a>
-    <a href="{% url 'rate:download-xlsx' %}">Download rates xlsx</a>
-    <table class="table">
-        <thead class="table table-bordered table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">ID</th>
-            <th scope="col">Created</th>
-            <th scope="col">Source</th>
-            <th scope="col">Currency</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Type</th>
-        </tr>
-        </thead>
+            <tbody>
+            {% for r in object_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ r.created }}</td>
+                    <td>{{ r.get_source_display|title }}</td>
+                    <td>{{ r.get_currency_type_display }}</td>
+                    <td>{{ r.amount }}</td>
+                    <td>{{ r.get_type_rate_display|upper }}</td>
 
-        <tbody>
-        {% for r in object_list %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ r.id }}</td>
-            <td>{{ r.created }}</td>
-            <td>{{ r.get_source_display|title }}</td>
-            <td>{{ r.get_currency_type_display }}</td>
-            <td>{{ r.amount }}</td>
-            <td>{{ r.get_type_rate_display|upper }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+                    {% if request.user.is_authenticated %}
+                    <td><a href="{% url 'rate:edit-rate' r.rate_id %}">Edit/Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
