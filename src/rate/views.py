@@ -1,9 +1,11 @@
 import csv
 import io
 
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView, View
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, ListView, TemplateView, UpdateView, View
 
 from rate.models import Rate
 from rate.selectors import get_latest_rates
@@ -13,7 +15,7 @@ import xlsxwriter
 
 
 class RateList(ListView):
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().order_by('created')
     template_name = 'rate-list.html'
 
     # def get_queryset(self):
@@ -135,3 +137,21 @@ def permission_denied_403(request, exception):
 
 def bad_request_400(request, exception):
     return render(request, '400.html', status=400)
+
+
+class EditRate(UserPassesTestMixin, UpdateView):
+    template_name = 'edit-rate.html'
+    queryset = Rate.objects.all()
+    fields = ('amount', 'source', 'currency_type', 'type_rate')
+    success_url = reverse_lazy('rate:list')
+
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
+
+
+class DeleteRate(LoginRequiredMixin, DeleteView):
+    queryset = Rate.objects.all()
+    success_url = reverse_lazy('rate:list')
+
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
