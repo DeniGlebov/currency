@@ -1,0 +1,101 @@
+[
+  {
+    "model": "rate.rate",
+    "pk": "00b9ea0d-ca26-4119-979e-d4ac94c207da",
+    "fields": {
+      "created": "2020-06-20T00:00:00Z",
+      "amount": "0.390",
+      "source": 1,
+      "currency_type": 3,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "0199b4aa-11ab-4abe-98c5-7b86aa93b65e",
+    "fields": {
+      "created": "2020-06-21T19:48:18.172Z",
+      "amount": "0.377",
+      "source": 4,
+      "currency_type": 3,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "02a87515-655e-4e16-b290-fdb575a24d01",
+    "fields": {
+      "created": "2020-06-21T19:48:18.224Z",
+      "amount": "29.700",
+      "source": 2,
+      "currency_type": 2,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "02d7b7cd-93f7-44cc-adb3-2bcfa824c441",
+    "fields": {
+      "created": "2020-06-24T18:30:00.649Z",
+      "amount": "30.212",
+      "source": 2,
+      "currency_type": 2,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "03011f74-8066-4424-b6a2-185a044cb12f",
+    "fields": {
+      "created": "2020-05-25T00:00:00Z",
+      "amount": "0.380",
+      "source": 1,
+      "currency_type": 3,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "054872c9-fbba-4170-8532-5bdd99c19468",
+    "fields": {
+      "created": "2020-06-24T18:30:02.026Z",
+      "amount": "26.420",
+      "source": 5,
+      "currency_type": 1,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "05e5f63b-cb86-42a1-95f9-222044f2312d",
+    "fields": {
+      "created": "2020-06-21T19:48:18.385Z",
+      "amount": "0.360",
+      "source": 1,
+      "currency_type": 3,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "06ac2ea2-a044-47d2-921d-10eb6aa63f7d",
+    "fields": {
+      "created": "2020-06-24T18:18:39.611Z",
+      "amount": "29.900",
+      "source": 4,
+      "currency_type": 2,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "07c31a8b-b5d3-4767-a257-0cc1996161be",
+    "fields": {
+      "created": "2020-05-31T00:00:00Z",
+      "amount": "26.650",
+      "source": 1,
+      "currency_type": 1,
+      "type_rate": 2
+    }
+  }
+]

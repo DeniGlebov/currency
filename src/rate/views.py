@@ -41,7 +41,6 @@ class LatestRatesView(TemplateView):
 
 class RateDownloadCSV(View):
     HEADERS = (
-        'id',
         'created',  # rate.created
         'amount',
         'source',  # rate.get_source_display()
@@ -75,7 +74,6 @@ class RateDownloadCSV(View):
 
 class RateDownloadXLSX(View):
     HEADERS = (
-        'id',
         'created',
         'amount',
         'source',

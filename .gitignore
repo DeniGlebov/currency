@@ -133,3 +133,5 @@ dmypy.json
 tmp.py
 temp.py
 temptemp.py
+
+settings_local.py
