@@ -1,4 +1,4 @@
-SECRET_KEY = '3836aiyo_e*m!c#1g@w=oa%@ev4&4a4e6^z7#6+sud%5ef#lc8'
+SECRET_KEY = '3836aiyo_e*m!c#1g@w=oa%@ev4'
 
 DEBUG = True
 
