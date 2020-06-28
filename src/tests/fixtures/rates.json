@@ -97,5 +97,23 @@
       "currency_type": 1,
       "type_rate": 2
     }
+  },
+  {
+    "model": "account.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$cJvM884tLVPf$HzpAfwBdmfujbE58CM1ptBViRKh23xZRAC6TtVm12VI=",
+      "last_login": "2020-06-27T04:49:16.759Z",
+      "is_superuser": true,
+      "username": "denis",
+      "first_name": "",
+      "last_name": "",
+      "email": "denis@denis.int",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2020-06-21T19:40:02.352Z",
+      "groups": [],
+      "user_permissions": []
+    }
   }
 ]
