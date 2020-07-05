@@ -1,21 +1,65 @@
 [
   {
     "model": "rate.rate",
-    "pk": "00b9ea0d-ca26-4119-979e-d4ac94c207da",
+    "pk": "02f5cd72-9aaa-4ea8-a053-1c231e6fc903",
     "fields": {
-      "created": "2020-06-20T00:00:00Z",
+      "created": "2020-07-05T07:04:45.855Z",
       "amount": "0.390",
-      "source": 1,
+      "source": 5,
       "currency_type": 3,
       "type_rate": 1
     }
   },
   {
     "model": "rate.rate",
-    "pk": "0199b4aa-11ab-4abe-98c5-7b86aa93b65e",
+    "pk": "0f1cc5db-79d3-4c78-85b6-6ab34a5eb890",
     "fields": {
-      "created": "2020-06-21T19:48:18.172Z",
-      "amount": "0.377",
+      "created": "2020-07-05T07:04:43.506Z",
+      "amount": "30.600",
+      "source": 1,
+      "currency_type": 2,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "152c2d3d-6d86-4cf9-8343-5957ea3fa612",
+    "fields": {
+      "created": "2020-07-05T07:04:43.230Z",
+      "amount": "27.100",
+      "source": 4,
+      "currency_type": 1,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "2c0d5cd1-abf6-48fa-b6b0-ba25aec0d6b0",
+    "fields": {
+      "created": "2020-07-05T07:04:45.833Z",
+      "amount": "30.700",
+      "source": 5,
+      "currency_type": 2,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "3f090a33-6073-40fa-9b57-f9e67387a3ac",
+    "fields": {
+      "created": "2020-07-05T07:04:43.143Z",
+      "amount": "0.384",
+      "source": 6,
+      "currency_type": 3,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "3f5d6cba-7154-403c-81dd-cd0023f8ee86",
+    "fields": {
+      "created": "2020-07-05T07:04:43.283Z",
+      "amount": "0.380",
       "source": 4,
       "currency_type": 3,
       "type_rate": 1
@@ -23,10 +67,76 @@
   },
   {
     "model": "rate.rate",
-    "pk": "02a87515-655e-4e16-b290-fdb575a24d01",
+    "pk": "416581b8-b8d7-423c-9abd-4a9d7f115dc3",
     "fields": {
-      "created": "2020-06-21T19:48:18.224Z",
-      "amount": "29.700",
+      "created": "2020-07-05T07:04:43.412Z",
+      "amount": "30.581",
+      "source": 2,
+      "currency_type": 2,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "4cc24367-58ff-42fe-9cb6-3f4fdb91afc7",
+    "fields": {
+      "created": "2020-07-05T07:04:43.130Z",
+      "amount": "0.380",
+      "source": 6,
+      "currency_type": 3,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "53debdf5-138f-49f5-9875-63a653ed162c",
+    "fields": {
+      "created": "2020-07-05T07:04:43.437Z",
+      "amount": "0.387",
+      "source": 2,
+      "currency_type": 3,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "56558d81-2521-46f1-babd-79213d1bd1f0",
+    "fields": {
+      "created": "2020-07-05T07:04:43.074Z",
+      "amount": "26.800",
+      "source": 6,
+      "currency_type": 1,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "58f5c87e-f657-4f54-aa38-ae8d24de0ab6",
+    "fields": {
+      "created": "2020-07-05T07:04:43.216Z",
+      "amount": "26.900",
+      "source": 4,
+      "currency_type": 1,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "6d56c62e-b05a-428a-b3cf-039946be01f4",
+    "fields": {
+      "created": "2020-07-05T07:04:43.257Z",
+      "amount": "30.350",
+      "source": 4,
+      "currency_type": 2,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "6ea8a574-1a89-4cda-8888-c8a44d6abf2a",
+    "fields": {
+      "created": "2020-07-05T07:04:43.399Z",
+      "amount": "30.050",
       "source": 2,
       "currency_type": 2,
       "type_rate": 2
@@ -34,32 +144,10 @@
   },
   {
     "model": "rate.rate",
-    "pk": "02d7b7cd-93f7-44cc-adb3-2bcfa824c441",
+    "pk": "6f479608-0c81-4b0f-a06d-aea314c98cb1",
     "fields": {
-      "created": "2020-06-24T18:30:00.649Z",
-      "amount": "30.212",
-      "source": 2,
-      "currency_type": 2,
-      "type_rate": 1
-    }
-  },
-  {
-    "model": "rate.rate",
-    "pk": "03011f74-8066-4424-b6a2-185a044cb12f",
-    "fields": {
-      "created": "2020-05-25T00:00:00Z",
-      "amount": "0.380",
-      "source": 1,
-      "currency_type": 3,
-      "type_rate": 1
-    }
-  },
-  {
-    "model": "rate.rate",
-    "pk": "054872c9-fbba-4170-8532-5bdd99c19468",
-    "fields": {
-      "created": "2020-06-24T18:30:02.026Z",
-      "amount": "26.420",
+      "created": "2020-07-05T07:04:45.791Z",
+      "amount": "26.850",
       "source": 5,
       "currency_type": 1,
       "type_rate": 2
@@ -67,10 +155,32 @@
   },
   {
     "model": "rate.rate",
-    "pk": "05e5f63b-cb86-42a1-95f9-222044f2312d",
+    "pk": "74f82a8f-d6f8-4991-b05d-3114e6a07152",
     "fields": {
-      "created": "2020-06-21T19:48:18.385Z",
-      "amount": "0.360",
+      "created": "2020-07-05T07:04:43.425Z",
+      "amount": "0.357",
+      "source": 2,
+      "currency_type": 3,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "7969d2df-3676-4eda-a053-24b2fa169af2",
+    "fields": {
+      "created": "2020-07-05T07:04:43.270Z",
+      "amount": "0.373",
+      "source": 4,
+      "currency_type": 3,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "7f952f24-5eab-425f-b648-494ee3cb9fb1",
+    "fields": {
+      "created": "2020-07-05T07:04:43.518Z",
+      "amount": "0.357",
       "source": 1,
       "currency_type": 3,
       "type_rate": 2
@@ -78,10 +188,109 @@
   },
   {
     "model": "rate.rate",
-    "pk": "06ac2ea2-a044-47d2-921d-10eb6aa63f7d",
+    "pk": "84e94e55-39d9-4694-9978-d0290fd31349",
     "fields": {
-      "created": "2020-06-24T18:18:39.611Z",
-      "amount": "29.900",
+      "created": "2020-07-05T07:04:43.493Z",
+      "amount": "29.950",
+      "source": 1,
+      "currency_type": 2,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "8b7dcfb5-b36a-4c79-b7ea-f7c67c142d20",
+    "fields": {
+      "created": "2020-07-05T07:04:43.412Z",
+      "amount": "26.850",
+      "source": 1,
+      "currency_type": 1,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "8f838486-f328-4140-b7c7-c25434895e5a",
+    "fields": {
+      "created": "2020-07-05T07:04:43.099Z",
+      "amount": "29.700",
+      "source": 6,
+      "currency_type": 2,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "93501e22-61b0-4af4-80cb-ef47fefe0b46",
+    "fields": {
+      "created": "2020-07-05T07:04:43.085Z",
+      "amount": "27.200",
+      "source": 6,
+      "currency_type": 1,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "bf00bc7e-bc0e-4785-969f-69aec403fe21",
+    "fields": {
+      "created": "2020-07-05T07:04:45.845Z",
+      "amount": "0.230",
+      "source": 5,
+      "currency_type": 3,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "c2125d4e-cb95-4625-b125-42596c8679eb",
+    "fields": {
+      "created": "2020-07-05T07:04:45.822Z",
+      "amount": "29.600",
+      "source": 5,
+      "currency_type": 2,
+      "type_rate": 2
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "c55fae5c-f5fa-4702-a1b1-8ebd12ab8f4e",
+    "fields": {
+      "created": "2020-07-05T07:04:43.531Z",
+      "amount": "0.387",
+      "source": 1,
+      "currency_type": 3,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "c6b61bd8-dfd3-4a9b-9c0b-ae577d12fafe",
+    "fields": {
+      "created": "2020-07-05T07:04:45.810Z",
+      "amount": "27.450",
+      "source": 5,
+      "currency_type": 1,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "d44c1a76-42c0-4128-a2e5-a73f1252fd16",
+    "fields": {
+      "created": "2020-07-05T07:04:43.480Z",
+      "amount": "27.350",
+      "source": 1,
+      "currency_type": 1,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "ec978da5-f4d6-45d2-b597-e19bdb7f74e1",
+    "fields": {
+      "created": "2020-07-05T07:04:43.244Z",
+      "amount": "30.150",
       "source": 4,
       "currency_type": 2,
       "type_rate": 2
@@ -89,11 +298,33 @@
   },
   {
     "model": "rate.rate",
-    "pk": "07c31a8b-b5d3-4767-a257-0cc1996161be",
+    "pk": "ed837b38-decb-46ee-bdaa-480f1d300fb3",
     "fields": {
-      "created": "2020-05-31T00:00:00Z",
-      "amount": "26.650",
-      "source": 1,
+      "created": "2020-07-05T07:04:43.116Z",
+      "amount": "30.550",
+      "source": 6,
+      "currency_type": 2,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "ff552c28-b9cc-456f-bf6c-5bed2b74a428",
+    "fields": {
+      "created": "2020-07-05T07:04:43.386Z",
+      "amount": "27.313",
+      "source": 2,
+      "currency_type": 1,
+      "type_rate": 1
+    }
+  },
+  {
+    "model": "rate.rate",
+    "pk": "ff7f4993-0e9d-4125-8f54-104088416e93",
+    "fields": {
+      "created": "2020-07-05T07:04:43.373Z",
+      "amount": "26.950",
+      "source": 2,
       "currency_type": 1,
       "type_rate": 2
     }
@@ -102,8 +333,8 @@
     "model": "account.user",
     "pk": 1,
     "fields": {
-      "password": "pbkdf2_sha256$150000$cJvM884tLVPf$HzpAfwBdmfujbE58CM1ptBViRKh23xZRAC6TtVm12VI=",
-      "last_login": "2020-06-27T04:49:16.759Z",
+      "password": "pbkdf2_sha256$150000$QyVHThw0QN1G$9mksZ7DTxucYbLx7T+dtTejFr2gBSfU67ze1SD9FUI4=",
+      "last_login": "2020-07-05T07:06:47.695Z",
       "is_superuser": true,
       "username": "denis",
       "first_name": "",
@@ -111,7 +342,7 @@
       "email": "denis@denis.int",
       "is_staff": true,
       "is_active": true,
-      "date_joined": "2020-06-21T19:40:02.352Z",
+      "date_joined": "2020-07-05T07:06:34.653Z",
       "groups": [],
       "user_permissions": []
     }
