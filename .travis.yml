@@ -9,4 +9,4 @@ script:
   - pip check
   - python ./src/manage.py check
   - python ./src/manage.py makemigrations --check --dry-run
-  - pytest ./src/tests -s
+  - pytest ./src/tests/test_rate.py::test_authorized_an_admin_edit_rate -s
