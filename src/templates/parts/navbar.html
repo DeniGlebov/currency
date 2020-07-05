@@ -1,0 +1,46 @@
+{% load active_tab %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'index' %}">Home</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item {{ request.path|active:'index' }}">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item {{ request.path|active:'rate:list' }}">
+                <a class="nav-link" href="{% url 'rate:list' %}">Rates</a>
+            </li>
+            <li class="nav-item {{ request.path|active:'rate:latest-rates' }}">
+                <a class="nav-link" href="{% url 'rate:latest-rates' %}">Latest rates</a>
+            </li>
+            <li class="nav-item {{ request.path|active:'account:contact-us' }}">
+                <a class="nav-link" href="{% url 'account:contact-us' %}">Contact Us</a>
+            </li>
+
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:my-profile' %}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                </li>
+            {% endif %}
+
+
+        </ul>
+    </div>
+</nav>

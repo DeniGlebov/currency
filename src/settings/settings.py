@@ -10,7 +10,7 @@ SECRET_KEY = '3836aiyo_e*m!c#1g@w=oa%@ev4&4a4e6^z7#6+sud%5ef#lc8'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -102,6 +102,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_content', 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
