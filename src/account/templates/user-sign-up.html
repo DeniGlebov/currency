@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Sing Up
+{% endblock title %}
+
+{% block content %}
+    Sing Up
+    <div class="row">
+        <div class="col">
+            <form method="post" action="{% url 'account:sign-up' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-primary" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
