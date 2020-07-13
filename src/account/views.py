@@ -1,4 +1,4 @@
-from account.forms import SignUpForm
+from account.forms import ChangePasswordForm, SignUpForm
 from account.models import Contact, User
 from account.tasks import send_email_async
 from account.tokens import account_activation_token
@@ -76,3 +76,16 @@ class Activate(UpdateView):
             return redirect('account:login')
         else:
             return render(request, 'account_activation_invalid.html')
+
+
+class ChangePassword(UpdateView):
+    template_name = 'change-password.html'
+    queryset = User.objects
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('index')
+
+    def get_object(self, queryset=None):
+        try:
+            return self.get_queryset().get(id=self.request.user.id)
+        except User.DoesNotExist:
+            raise Http404()

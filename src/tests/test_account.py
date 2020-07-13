@@ -114,3 +114,22 @@ def test_logout_get_form(client):
     response = client.get(url)
     assert response.status_code == 302
     assert response.url == reverse('index')
+
+
+def test_change_password_unauthorized(client):
+    url = reverse('account:change-password')
+    response = client.get(url)
+    assert response.status_code == 404
+
+
+def test_change_password(client):
+    url = reverse('account:login')
+    payload = {
+        'username': 'denis',
+        'password': 'denis',
+    }
+    response = client.post(url, payload)
+    assert response.status_code == 302
+    url = reverse('account:change-password')
+    response = client.get(url)
+    assert response.status_code == 200

@@ -11,6 +11,8 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('rate/', include('rate.urls')),
 
+    path('accounts/', include('django.contrib.auth.urls')),
+
 ]
 
 handler404 = 'rate.views.page_not_found_404'
