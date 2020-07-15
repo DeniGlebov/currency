@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'crispy_forms',
+    'rest_framework',
 
     'account',
     'rate',
@@ -106,6 +107,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_content', 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'static_content', 'media')
 
 CELERY_BROKER_URL = 'amqp://localhost'
 

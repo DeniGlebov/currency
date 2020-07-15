@@ -1,5 +1,6 @@
 from account.forms import ChangePasswordForm, SignUpForm
 from account.models import Contact, User
+from account.serializers import UserSerializer
 from account.tasks import send_email_async
 from account.tokens import account_activation_token
 
@@ -10,6 +11,8 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.generic import CreateView, UpdateView
+
+from rest_framework import generics
 
 
 def smoke(request):
@@ -31,8 +34,8 @@ class ContactUs(CreateView):
 class MyProfile(LoginRequiredMixin, UpdateView):
     template_name = 'user-edit.html'
     queryset = User.objects
-    fields = ('first_name', 'last_name', 'email',)
-    success_url = reverse_lazy('index')
+    fields = ('first_name', 'last_name', 'email', 'avatar')
+    success_url = reverse_lazy('account:my-profile')
 
     def get_object(self, queryset=None):
         obj = self.get_queryset().get(id=self.request.user.id)
@@ -89,3 +92,13 @@ class ChangePassword(UpdateView):
             return self.get_queryset().get(id=self.request.user.id)
         except User.DoesNotExist:
             raise Http404()
+
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserReadUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
