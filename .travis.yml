@@ -12,7 +12,7 @@ script:
   - pytest ./src/tests -s
 env:
   global:
-    - SECRET_KEY=abc123123rrfsss
+    - SECRET_KEY=abc123DFG
     - SERVER=dev
     - ALLOWED_HOSTS=localhost
     - MEMCACHED_HOST=a
@@ -20,9 +20,9 @@ env:
     - RABBITMQ_DEFAULT_PASS=a
     - RABBITMQ_DEFAULT_HOST=a
     - EMAIL_HOST=a
-    - EMAIL_HOST_USER = a
-    - EMAIL_HOST_PASSWORD = a
-    - EMAIL_PORT = a
-    - EMAIL_USE_TLS = a
-    - EMAIL_BACKEND = a
-    - DEFAULT_FROM_EMAIL = a
+    - EMAIL_HOST_USER=a
+    - EMAIL_HOST_PASSWORD=a
+    - EMAIL_PORT=a
+    - EMAIL_USE_TLS=a
+    - EMAIL_BACKEND=a
+    - DEFAULT_FROM_EMAIL=a
