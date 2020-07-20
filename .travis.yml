@@ -14,3 +14,4 @@ env:
   global:
     - SECRET_KEY=abc123123rrfsss
     - SERVER=dev
+    - ALLOWED_HOSTS=0.0.0.0
