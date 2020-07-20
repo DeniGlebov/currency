@@ -14,4 +14,15 @@ env:
   global:
     - SECRET_KEY=abc123123rrfsss
     - SERVER=dev
-    - ALLOWED_HOSTS=0.0.0.0
+    - ALLOWED_HOSTS=localhost
+    - MEMCACHED_HOST=a
+    - RABBITMQ_DEFAULT_USER=a
+    - RABBITMQ_DEFAULT_PASS=a
+    - RABBITMQ_DEFAULT_HOST=a
+    - EMAIL_HOST=a
+    - EMAIL_HOST_USER = a
+    - EMAIL_HOST_PASSWORD = a
+    - EMAIL_PORT = a
+    - EMAIL_USE_TLS = a
+    - EMAIL_BACKEND = a
+    - DEFAULT_FROM_EMAIL = a
