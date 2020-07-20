@@ -13,3 +13,4 @@ script:
 env:
   global:
     - SECRET_KEY=abc123123rrfsss
+    - SERVER=dev
