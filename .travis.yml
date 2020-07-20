@@ -10,6 +10,8 @@ script:
   - python ./src/manage.py check
   - python ./src/manage.py makemigrations --check --dry-run
   - pytest ./src/tests -s
+services:
+  - postgresql
 env:
   global:
     - SECRET_KEY=abc123DFG
