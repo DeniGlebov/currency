@@ -10,8 +10,14 @@
     User edit
     <div class="row">
         <div class="col">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+                {% if user.avatar %}
+                    Avatar
+                    <img src="{{ user.avatar.url }}" alt="Profile picture" style="width:90px;height:90px;border:0">
+                {% else %}
+                    Not avatar
+                {% endif %}
                 {{ form|crispy }}
                 <button class="btn btn-primary" type="submit">Send</button>
             </form>

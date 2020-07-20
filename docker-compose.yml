@@ -1,0 +1,118 @@
+version: "3.3"
+
+services:
+  memcached:
+    image: memcached:latest
+    hostname: ${MEMCACHED_HOST}
+    container_name: memcached
+    env_file: .env
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3.8-rc-management
+    hostname: ${RABBITMQ_DEFAULT_HOST}
+    env_file: .env
+    container_name: rabbitmq
+    restart: always
+
+  backend:
+    env_file: .env
+    build: .
+    container_name: backend
+    command: ./commands/wsgi/${SERVER}.sh
+    restart: always
+    depends_on:
+      - memcached
+      - rabbitmq
+      - postgres
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/srv/project
+
+  celery:
+    env_file: .env
+    build: .
+    container_name: celery
+    hostname: ${CELERY_HOST}
+    command: ./commands/celery/start_celery.sh
+    restart: always
+    depends_on:
+      - memcached
+      - rabbitmq
+    volumes:
+      - ./:/srv/project
+
+  celerybeat:
+    env_file: .env
+    build: .
+    container_name: celerybeat
+    hostname: ${CELERYBEAT_HOST}
+    command: ./commands/celery/start_celerybeat.sh
+    restart: always
+    depends_on:
+      - memcached
+      - rabbitmq
+      - celery
+    volumes:
+      - ./:/srv/project
+
+  postgres:
+    image: postgres:12.3-alpine
+    container_name: postgres
+    hostname: ${POSTGRES_HOST}
+    env_file: .env
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:1.17.4-alpine
+    container_name: nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./static_content:/etc/nginx/static_content/
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    hostname: portainer
+    env_file: .env
+    ports:
+      - "9000:9000"
+    command: --admin-password '$$2y$$05$$Z33ygPtSf2Hdl5jtJZL/UuKeR.qAkml4dZL8ge2SL6HiaUi7vt75a'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - memcached
+      - rabbitmq
+      - nginx
+      - postgres
+      - celery
+      - backend
+      - celerybeat
+      - flower
+
+  flower:
+    env_file: .env
+    build: .
+    container_name: flower
+    hostname: ${FLOWER_HOST}
+    command: flower --broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_DEFAULT_HOST}:5672/ --port=5555
+    restart: always
+    depends_on:
+      - rabbitmq
+      - celery
+      - celerybeat
+    ports:
+      - 5555:5555
+    volumes:
+      - ./:/srv/project
+
+volumes:
+  db_data: {}
