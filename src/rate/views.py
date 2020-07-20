@@ -9,10 +9,7 @@ from django.views.generic import DeleteView, ListView, TemplateView, UpdateView,
 
 from rate.models import Rate
 from rate.selectors import get_latest_rates
-from rate.serializers import RateSerializer
 from rate.utils import display
-
-from rest_framework import generics
 
 import xlsxwriter
 
@@ -156,13 +153,3 @@ class DeleteRate(LoginRequiredMixin, DeleteView):
 
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_superuser
-
-
-class RateListCreateView(generics.ListCreateAPIView):
-    queryset = Rate.objects.all()
-    serializer_class = RateSerializer
-
-
-class RateReadUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Rate.objects.all()
-    serializer_class = RateSerializer
