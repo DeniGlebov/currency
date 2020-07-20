@@ -14,7 +14,7 @@ env:
   global:
     - SECRET_KEY=abc123DFG
     - SERVER=dev
-    - ALLOWED_HOSTS=localhost
+    - ALLOWED_HOSTS=0.0.0.0
     - MEMCACHED_HOST=a
     - RABBITMQ_DEFAULT_USER=a
     - RABBITMQ_DEFAULT_PASS=a
