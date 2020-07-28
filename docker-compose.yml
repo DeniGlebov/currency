@@ -2,23 +2,28 @@ version: "3.3"
 
 services:
   memcached:
+    env_file: .env
     image: memcached:latest
     hostname: ${MEMCACHED_HOST}
     container_name: memcached
-    env_file: .env
     restart: always
+    depends_on:
+      - postgres
 
   rabbitmq:
+    env_file: .env
     image: rabbitmq:3.8-rc-management
     hostname: ${RABBITMQ_DEFAULT_HOST}
-    env_file: .env
     container_name: rabbitmq
     restart: always
+    depends_on:
+      - postgres
 
   backend:
     env_file: .env
     build: .
     container_name: backend
+    hostname: ${BACKEND_HOST}
     command: ./commands/wsgi/${SERVER}.sh
     restart: always
     depends_on:
@@ -27,6 +32,7 @@ services:
       - postgres
     ports:
       - "8000:8000"
+      - "8001:8001"
     volumes:
       - ./:/srv/project
 
@@ -38,7 +44,7 @@ services:
     command: ./commands/celery/start_celery.sh
     restart: always
     depends_on:
-      - memcached
+      - postgres
       - rabbitmq
     volumes:
       - ./:/srv/project
@@ -51,26 +57,28 @@ services:
     command: ./commands/celery/start_celerybeat.sh
     restart: always
     depends_on:
-      - memcached
+      - postgres
       - rabbitmq
       - celery
     volumes:
       - ./:/srv/project
 
   postgres:
+    env_file: .env
     image: postgres:12.3-alpine
     container_name: postgres
     hostname: ${POSTGRES_HOST}
-    env_file: .env
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
 
   nginx:
+    env_file: .env
     image: nginx:1.17.4-alpine
     container_name: nginx
+    hostname: ${NGINX_HOST}
     volumes:
-      - ./nginx:/etc/nginx/conf.d/
+      - ./nginx/:/etc/nginx/conf.d/
       - ./static_content:/etc/nginx/static_content/
     ports:
       - "80:80"
@@ -79,13 +87,13 @@ services:
       - backend
 
   portainer:
+    env_file: .env
     image: portainer/portainer:latest
     container_name: portainer
     hostname: portainer
-    env_file: .env
     ports:
       - "9000:9000"
-    command: --admin-password '$$2y$$05$$Z33ygPtSf2Hdl5jtJZL/UuKeR.qAkml4dZL8ge2SL6HiaUi7vt75a'
+    command: --admin-password='${PORTAINER_HASH_PASSWORD}'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
