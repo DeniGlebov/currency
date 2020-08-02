@@ -329,9 +329,9 @@ def parse_aval():
 
 @shared_task
 def parse():
-    parse_monobank.delay()
-    parse_privatbank.delay()
-    parse_nbu.delay()
-    parse_vkurse.delay()
-    parse_oschadbank.delay()
-    parse_aval.delay()
+    parse_monobank.delay()  # pragma: no cover
+    parse_privatbank.delay()  # pragma: no cover
+    parse_nbu.delay()  # pragma: no cover
+    parse_vkurse.delay()  # pragma: no cover
+    parse_oschadbank.delay()  # pragma: no cover
+    parse_aval.delay()  # pragma: no cover

@@ -56,9 +56,9 @@ handler500 = 'rate.views.error_500'
 handler403 = 'rate.views.permission_denied_403'
 handler400 = 'rate.views.bad_request_400'
 
-if settings.DEBUG:
-    import debug_toolbar
+if settings.DEBUG:  # pragma: no cover
+    import debug_toolbar  # pragma: no cover
 
     urlpatterns = [
                       path('__debug__/', include(debug_toolbar.urls)),
-                  ] + urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  ] + urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # pragma: no cover
