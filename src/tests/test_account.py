@@ -48,15 +48,15 @@ def test_contact_us_incorrect_payload(client):
     assert len(mail.outbox) == 0
 
 
-def test_contact_us_correct_payload(client, settings):
+def test_contact_us_correct_payload(client, settings, fake):
     initial_count = Contact.objects.count()
     assert len(mail.outbox) == 0
 
     url = reverse('account:contact-us')
     payload = {
-        'email_from': 'mailmail@mail.com',
-        'title': 'hello world',
-        'message': 'hello world' * 50,
+        'email_from': fake.email(),
+        'title': fake.word(),
+        'message': fake.word(),
     }
     response = client.post(url, payload)
     assert response.status_code == 302
@@ -122,14 +122,53 @@ def test_change_password_unauthorized(client):
     assert response.status_code == 404
 
 
-def test_change_password(client):
+def test_singup_form(client, fake):
+    url = reverse('account:sign-up')
+    password = '123sdf456fgh'
+    payload = {
+        'email': fake.email(),
+        'password1': password,
+        'password2': password + 'wrong',
+    }
+    response = client.post(url, payload)
+    assert response.status_code == 200
+
+    payload['password2'] = password
+    response = client.post(url, payload)
+    assert response.status_code == 302
+
+    response = client.post(url, payload)
+    assert response.status_code == 200
+
+
+def test_ChangePasswordForm(client, fake):
+    password = 'denis'
     url = reverse('account:login')
     payload = {
         'username': 'denis',
-        'password': 'denis',
+        'password': password
     }
     response = client.post(url, payload)
     assert response.status_code == 302
+
     url = reverse('account:change-password')
     response = client.get(url)
     assert response.status_code == 200
+    payload = {
+        'password_old': fake.word(),
+        'password1': password + 'new',
+        'password2': password + 'wrong',
+    }
+    response = client.post(url, payload)
+    assert response.status_code == 200
+    assert response.context_data['form'].errors['password_old'] == ['Invalid password']
+
+    payload['password_old'] = password
+    response = client.post(url, payload)
+    assert response.status_code == 200
+    assert response.context_data['form'].errors['__all__'][0] == 'Password do not match!'
+
+    payload['password1'] = fake.word()
+    payload['password2'] = payload['password1']
+    response = client.post(url, payload)
+    assert response.status_code == 302

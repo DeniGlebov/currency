@@ -1,4 +1,7 @@
+from django.core.cache import cache
 from django.core.management import call_command
+
+from faker import Faker
 
 import pytest
 
@@ -24,3 +27,15 @@ def db_session(request, django_db_setup, django_db_blocker):
 def django_db_setup(django_db_setup, django_db_blocker):
     with django_db_blocker.unblock():
         call_command('loaddata', './src/tests/fixtures/rates.json')
+
+
+@pytest.fixture(scope='session')
+def fake():
+    yield Faker()
+
+
+@pytest.fixture(scope='session', autouse=True)
+def clear_session():
+    cache.clear()
+    yield
+    cache.clear()
