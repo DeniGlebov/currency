@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load paginator %}
+
 {% block title %}Rate List{% endblock title %}
 
 
@@ -18,7 +20,7 @@
                 <th scope="col">Type</th>
 
                 {% if request.user.is_authenticated %}
-                <th scope="col">Edit/Delete</th>
+                    <th scope="col">Edit/Delete</th>
                 {% endif %}
 
             </tr>
@@ -28,18 +30,23 @@
             {% for r in object_list %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ r.created }}</td>
+                    <td>{{ r.created }} {{ is_paginated }}</td>
                     <td>{{ r.get_source_display|title }}</td>
                     <td>{{ r.get_currency_type_display }}</td>
                     <td>{{ r.amount }}</td>
                     <td>{{ r.get_type_rate_display|upper }}</td>
 
                     {% if request.user.is_authenticated %}
-                    <td><a href="{% url 'rate:edit-rate' r.rate_id %}">Edit/Delete</a></td>
+                        <td><a href="{% url 'rate:edit-rate' r.rate_id %}">Edit/Delete</a></td>
                     {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+
+        {% if is_paginated %}
+            {% paginate page_obj %}
+        {% endif %}
+
     </div>
 {% endblock content %}

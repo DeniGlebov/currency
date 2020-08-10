@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-2">
+            <p class="font-weight-bold">Page {{ page.number }} of {{ page.paginator.num_pages }}</p>
+        </div>
+
+        <div class="col-md-6">
+            <nav>
+                <ul class="pagination">
+                    {% if page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.previous_page_number }}{{ GET_string }}"
+                               title="More recent entries">&laquo;</a>
+                        </li>
+                    {% endif %}
+
+                    {% for page_number in begin %}
+                        <li class="page{% ifequal page.number page_number %} current{% endifequal %}">
+                            {% ifequal page.number page_number %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="?page={{ page_number }}">{{ page_number }}</a></li>
+                            {% else %}
+                                <a class="page-link" href="?page={{ page_number }}{{ GET_string }}"
+                                   title="{{ page_number }}">{{ page_number }}</a>
+                            {% endifequal %}
+                        </li>
+                    {% endfor %}
+
+                    {% if middle %}
+                        <li class="ellipsis">&hellip;</li>
+                        {% for page_number in middle %}
+                            <li class="page{% ifequal page.number page_number %} current{% endifequal %}">
+                                {% ifequal page.number page_number %}
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ page_number }}">{{ page_number }}</a></li>
+                                {% else %}
+                                    <a class="page-link" href="?page={{ page_number }}{{ GET_string }}"
+                                       title="{{ page_number }}">{{ page_number }}</a>
+                                {% endifequal %}
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if end %}
+                        <li class="ellipsis">&hellip;</li>
+                        {% for page_number in end %}
+                            <li class="page{% ifequal page.number page_number %} current{% endifequal %}">
+                                {% ifequal page.number page_number %}
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ page_number }}">{{ page_number }}</a></li>
+                                {% else %}
+                                    <a class="page-link" href="?page={{ page_number }}{{ GET_string }}"
+                                       title="{{ page_number }}">{{ page_number }}</a>
+                                {% endifequal %}
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if page.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.next_page_number }}{{ GET_string }}"
+                               title="More old entries">&raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <div class="col-md-2">
+            <form class="form-inline">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <input type="text" id="page" name="page" placeholder="number" pattern="^[0-9]+$">
+                    </li>
+
+                    <li class="page-item">
+                        <input class="page-link" type="submit" value="Page">
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+
+    </div>
+</div>
