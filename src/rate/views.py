@@ -17,6 +17,7 @@ import xlsxwriter
 class RateList(ListView):
     queryset = Rate.objects.all().order_by('created')
     template_name = 'rate-list.html'
+    paginate_by = 25
 
     # def get_queryset(self):
     #     queryset = super().get_queryset()
