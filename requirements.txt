@@ -15,7 +15,7 @@ django-crispy-forms==1.9.2
 django-debug-toolbar==2.2
 django-extensions==3.0.3
 django-filter==2.3.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-simplejwt==4.4.0
 drf-yasg==1.17.1
 fake-useragent==0.1.11
