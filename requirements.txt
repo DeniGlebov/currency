@@ -24,7 +24,7 @@ flake8==3.8.3
 flake8-builtins==1.5.3
 flake8-import-order==0.18.1
 flake8-print==3.1.4
-flower==0.9.5
+flower==1.2.0
 humanize==2.5.0
 idna==2.10
 importlib-metadata==1.7.0
